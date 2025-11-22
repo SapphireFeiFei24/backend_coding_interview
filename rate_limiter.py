@@ -1,5 +1,5 @@
 from collections import deque, defaultdict
-
+import threading
 
 class FixedWindowRateLimiter:
     """
@@ -44,6 +44,7 @@ class FixedWindowRateLimiter:
         self.request_logs = defaultdict(deque)
 
     def allowRequest(self, clientId, curr_time):
+
         # update
         while self.request_logs[clientId] and (curr_time - self.request_logs[clientId][0]) >= self.window_size:
             self.request_logs[clientId].popleft()
